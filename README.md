@@ -1,0 +1,1 @@
+# seegene-platform-mvn-example
