@@ -1,0 +1,68 @@
+spring:
+  profiles:
+    active: local
+  application:
+    name: seegene-platform-mvc-example
+  datasource:
+    poolName: sample-domain-cp
+    type: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: "jdbc:mysql://localhost:3306/sample?useSSL=false&allowPublicKeyRetrieval=true"
+    username: root
+    password: root
+    auto-commit: false
+    connectionTimeout: 3000
+    idleTimeout: 0
+    maxLifetime: 60000
+    maximumPoolSize: 5
+    jpa:
+      hibernate:
+        ddl-auto: update
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.MySQL8Dialect
+          format_sql: true
+          show-sql: true
+          order_inserts: true
+          order_updates: true
+          jdbc:
+            batch_size: 500
+            fetch_size: 500
+            batch_versioned_data: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9080/realms/seegene-platform
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+
+jwt:
+  auth:
+    converter:
+      resource-id: platform
+      principal-attribute: preferred_username
+access:
+  info:
+    admin: clevel
+    user: platform
+
+app:
+  cors:
+    allowed-origins: http://localhost:3000
+
+server:
+  port: 8081
+  servlet:
+    context-path: /api
+
+logging:
+  com.demo.sample: debug
+  config: classpath:logback-local.xml
+---
+spring:
+  profiles:
+    active: dev
+---
+spring:
+  profiles:
+    active: prd
