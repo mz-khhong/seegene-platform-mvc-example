@@ -39,12 +39,12 @@ spring:
 jwt:
   auth:
     converter:
-      resource-id: platform
+      resource-id: platform-client
       principal-attribute: preferred_username
 access:
   info:
-    admin: clevel
-    user: platform
+    admin: admin
+    user: develop-user
 
 app:
   cors:
@@ -55,9 +55,6 @@ server:
   servlet:
     context-path: /api
 
-logging:
-  com.demo.sample: debug
-  config: classpath:logback-local.xml
 ---
 spring:
   profiles:

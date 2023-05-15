@@ -122,5 +122,6 @@ node_modules
 
 # log
 .logs/
+*.log
 
 .env*.local
