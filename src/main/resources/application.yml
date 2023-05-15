@@ -55,6 +55,10 @@ server:
   servlet:
     context-path: /api
 
+logging:
+  com.demo.sample: debug
+  config: classpath:logback-local.xml
+
 ---
 spring:
   profiles:
