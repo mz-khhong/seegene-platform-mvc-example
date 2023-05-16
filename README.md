@@ -3,8 +3,9 @@
 # KeyCloak Info  
 - `Version : 20.0.5`
 - `Realm : seegene-platform`
-- `Client : platform-client, insilico-client`
-- `Roles ... `
+- `Client : platform-client, develop-user`
+- `ClientSecret : xxxxxxxxx`
+- `Roles info : admin-> admin, user -> develop-user `
 - Configuration > {http://localhost:9080}/realms/seegene-platform/.well-known/openid-configuration
 - Token 발급 > {http://localhost:9080}/realms/seegene-platform/protocol/openid-connect/token
 > [Command] \
@@ -25,5 +26,3 @@
 > client_secret: {secretKey} \
 > username: {user} \
 > password: {xxxxx}
-
-# [TOBE] OTP Info..  
