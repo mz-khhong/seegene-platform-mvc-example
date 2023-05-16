@@ -19,17 +19,15 @@ import java.security.Principal;
 public class TestController {
 
     private final TestService testService;
+
     @GetMapping("/anonymous")
-    public ResponseEntity<String> getAnonymous() {
-        return ResponseEntity.ok("Hello Anonymous");
+    public ApiResponse<String> getAnonymous() {
+        return ApiResponseGenerator.success(testService.getAnonymousUser());
     }
 
     @GetMapping("/admin")
-    public ResponseEntity<String> getAdmin(Principal principal) {
-        JwtAuthenticationToken token = (JwtAuthenticationToken) principal;
-        String userName = (String) token.getTokenAttributes().get("name");
-        String userEmail = (String) token.getTokenAttributes().get("email");
-        return ResponseEntity.ok("[Seegene-platform-mvc-example] Hello Admin \nUser Name : " + userName + "\nUser Email : " + userEmail);
+    public ApiResponse<String> getAdmin(Principal principal) {
+        return ApiResponseGenerator.success(testService.getAdminUser(principal));
     }
 
     @GetMapping("/user")
