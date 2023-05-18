@@ -36,4 +36,9 @@ public class TestController {
 
     }
 
+    // to-be
+    @GetMapping("/sqs-test")
+    public  @ResponseBody ApiResponse<String> getSqsTest(Principal principal) {
+        return ApiResponseGenerator.success(testService.getUser(principal));
+    }
 }

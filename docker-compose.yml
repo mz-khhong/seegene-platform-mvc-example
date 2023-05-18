@@ -13,10 +13,15 @@ services:
       - 3306:3306
     restart: always
     volumes:
+      - ./keycloak/mysql_data:/var/lib/mysql
       - ./initialize_mysql_database.sh:/initialize_mysql_database.sh
-      - ./docker/mysql/sql:/data/sql
   keycloak:
     image: quay.io/keycloak/keycloak:20.0.5
+    volumes:
+      - ./keycloak/providers:/opt/keycloak/providers
+      - ./keycloak/themes:/opt/keycloak/themes
+      - ./keycloak/data:/opt/keycloak/data
+      - ./keycloak/conf:/opt/keycloak/conf
     environment:
       DB_VENDOR: MYSQL
       DB_ADDR: mysql

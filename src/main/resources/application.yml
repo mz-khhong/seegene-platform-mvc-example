@@ -15,20 +15,20 @@ spring:
     idleTimeout: 0
     maxLifetime: 60000
     maximumPoolSize: 5
-    jpa:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
       hibernate:
-        ddl-auto: update
-      properties:
-        hibernate:
-          dialect: org.hibernate.dialect.MySQL8Dialect
-          format_sql: true
-          show-sql: true
-          order_inserts: true
-          order_updates: true
-          jdbc:
-            batch_size: 500
-            fetch_size: 500
-            batch_versioned_data: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+        show-sql: true
+        order_inserts: true
+        order_updates: true
+        jdbc:
+          batch_size: 500
+          fetch_size: 500
+          batch_versioned_data: true
   security:
     oauth2:
       resourceserver:
@@ -59,6 +59,16 @@ logging:
   com.demo.sample: debug
   config: classpath:logback-local.xml
 
+keycloak:
+  enabled: true
+  realm: seegene-platform
+  auth-server-url: "http://localhost:9080/realms/seegene-platform/protocol/openid-connect/auth"
+  ssl-required: external # 기본값은 외부 요청에 HTTPS가 기본적으로 필요하다는 외부 의미 유효한 값은 'all', 'external', 'none'
+  resource: platform-client
+  credentials:
+    secret: rXtbVUKkF8wJ2Q4nqPL7Rao6ScsjxWLd
+  use-resource-role-mappings: true
+  bearer-only: true
 ---
 spring:
   profiles:
