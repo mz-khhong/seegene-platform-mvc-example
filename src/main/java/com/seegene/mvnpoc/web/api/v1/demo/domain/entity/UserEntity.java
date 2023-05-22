@@ -8,6 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 
 /**
@@ -22,16 +25,8 @@ import lombok.Setter;
  * 1 2023-05-17        khhong        최초작성
  * </PRE>
  */
-//@NamedQueries({
-//        @NamedQuery(name="getUserByUsername", query="select u from UserEntity u where u.username = :username"),
-//        @NamedQuery(name="getUserByEmail", query="select u from UserEntity u where u.email = :email"),
-//        @NamedQuery(name="getUserCount", query="select count(u) from UserEntity u"),
-//        @NamedQuery(name="getAllUsers", query="select u from UserEntity u"),
-//        @NamedQuery(name="searchForUser", query="select u from UserEntity u where " +
-//                "( lower(u.username) like :search or u.email like :search ) order by u.username"),
-//})
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -43,18 +38,33 @@ public class UserEntity {
     private String id;
 
     /** 아이디 */
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "userId", nullable = false)
     private String userId;
 
     /** 이름 */
-    @Column(name = "user_name", nullable = false)
+    @Column(name = "username", nullable = false)
     private String userName;
 
     /** 비밀번호 */
-    @Column(name = "user_password", length = 200)
+    @Column(name = "userpassword", length = 200)
     private String userPassword;
 
-    private String email;
+    @CreationTimestamp
+    @Column(name = "createdAt")
+    private LocalDateTime createdAt;
 
-    private String phone;
+    @Column(name = "email", nullable = false)
+    private String email;
+    @Column(name = "fullName", nullable = false)
+    private String fullName;
+    @Column(name = "firstName", nullable = false)
+    private String firstName;
+    @Column(name = "lastName", nullable = false)
+    private String lastName;
+
+    @Column(name = "cpf", nullable = false)
+    private String cpf;
+
+    @Column(name = "hashPwd", nullable = false)
+    private String hashPwd;
 }

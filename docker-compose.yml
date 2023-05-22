@@ -1,21 +1,30 @@
 version: '3'
 
+volumes:
+  mysql_data:
+    driver: local
+
 services:
   mysql:
     image: mysql:8.0.29
     container_name: mysql8
     environment:
+      - MYSQL_USER=keycloak
+      - MYSQL_PASSWORD=keycloak1234
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_ROOT_HOST=%
-      - MYSQL_DATABASE=sample
+      - MYSQL_DATABASE=example
     command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
     ports:
       - 3306:3306
     restart: always
+    healthcheck:
+      test: "mysqladmin ping -u root -p$${MYSQL_ROOT_PASSWORD}"
     volumes:
       - ./keycloak/mysql_data:/var/lib/mysql
-      - ./initialize_mysql_database.sh:/initialize_mysql_database.sh
   keycloak:
+    depends_on:
+      - mysql
     image: quay.io/keycloak/keycloak:20.0.5
     volumes:
       - ./keycloak/providers:/opt/keycloak/providers
@@ -23,19 +32,19 @@ services:
       - ./keycloak/data:/opt/keycloak/data
       - ./keycloak/conf:/opt/keycloak/conf
     environment:
-      DB_VENDOR: MYSQL
+      DB_VENDOR: mysql
       DB_ADDR: mysql
+      DB_PORT: "3306"
       DB_DATABASE: keycloak
       DB_USER: keycloak
-      DB_PASSWORD: password
+      DB_PASSWORD: keycloak1234
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: Mz1q2w3e4r
+      KC_HOSTNAME_STRICT: false
       # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the MySQL JDBC driver documentation in order to use it.
-      #JDBC_PARAMS: "connectTimeout=30000"
+      JDBC_PARAMS: connectTimeout=30000 #useSSL=false&allowPublicKeyRetrieval=true
     entrypoint: ["/opt/keycloak/bin/kc.sh", "start-dev"]
     ports:
       - 9080:8080
-    depends_on:
-      - mysql
     healthcheck:
       test: "curl -f http://localhost:8080/health/ready || exit 1"

@@ -30,16 +30,6 @@ dependencies {
     //mysql 8 연동
     implementation 'mysql:mysql-connector-java:8.0.32'
 
-    // keycloak
-    implementation 'org.keycloak:keycloak-server-spi:21.1.1'
-    implementation 'org.keycloak:keycloak-core:21.1.1'
-    implementation 'org.keycloak:keycloak-server-spi-private:21.1.1'
-    implementation 'org.keycloak:keycloak-services:21.0.1'
-    implementation 'org.keycloak:keycloak-model-jpa:21.1.1'
-
-    // https://mvnrepository.com/artifact/org.hibernate/hibernate-core
-    implementation 'org.hibernate:hibernate-core:6.1.6.Final'
-
 
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
