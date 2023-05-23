@@ -30,9 +30,8 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
 
     @Override
     public AbstractAuthenticationToken convert(Jwt jwt) {
-        Collection<GrantedAuthority> authorities = Stream.concat(
-                jwtGrantedAuthoritiesConverter.convert(jwt).stream(),
-                extractResourceRoles(jwt).stream()).collect(Collectors.toSet());
+        Collection<GrantedAuthority> authorities = Stream.concat(jwtGrantedAuthoritiesConverter.convert(jwt).stream(), extractResourceRoles(jwt).stream()).collect(Collectors.toSet());
+
         return new JwtAuthenticationToken(jwt, authorities, getPrincipalClaimName(jwt));
     }
 
@@ -40,6 +39,7 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
         String claimName = JwtClaimNames.SUB;
         if (properties.getPrincipalAttribute() != null) {
             claimName = properties.getPrincipalAttribute();
+
         }
         return jwt.getClaim(claimName);
     }

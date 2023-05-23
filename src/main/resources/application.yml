@@ -37,6 +37,11 @@ spring:
           jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
 
 jwt:
+  token-validity-in-seconds: 1800 # * 1000 = 30분
+  refresh-token-validity-in-seconds: 5400 # * 1000 = 90분
+  server:
+    api-auth-key: "localseegeneapiauthkeyinsilicoaaaaaaaa"
+
   auth:
     converter:
       resource-id: platform-client
@@ -59,16 +64,8 @@ logging:
   com.demo.sample: debug
   config: classpath:logback-local.xml
 
-keycloak:
-  enabled: true
-  realm: seegene-platform
-  auth-server-url: "http://localhost:9080/realms/seegene-platform/protocol/openid-connect/auth"
-  ssl-required: external # 기본값은 외부 요청에 HTTPS가 기본적으로 필요하다는 외부 의미 유효한 값은 'all', 'external', 'none'
-  resource: platform-client
-  credentials:
-    secret: rXtbVUKkF8wJ2Q4nqPL7Rao6ScsjxWLd
-  use-resource-role-mappings: true
-  bearer-only: true
+
+
 ---
 spring:
   profiles:

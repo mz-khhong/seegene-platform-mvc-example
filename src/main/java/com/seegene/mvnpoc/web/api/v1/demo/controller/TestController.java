@@ -4,9 +4,9 @@ import com.seegene.mvnpoc.support.dto.ApiResponse;
 import com.seegene.mvnpoc.support.dto.ApiResponseGenerator;
 import com.seegene.mvnpoc.web.api.v1.demo.service.TestService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,21 +27,16 @@ public class TestController {
     }
 
     @GetMapping("/admin")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ApiResponse<String> getAdmin(Principal principal) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public @ResponseBody ApiResponse<String> getAdmin(Principal principal) {
         return ApiResponseGenerator.success(testService.getAdminUser(principal));
     }
 
     @GetMapping("/user")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public  @ResponseBody ApiResponse<String> getUser(Principal principal) {
-        return ApiResponseGenerator.success(testService.getUser(principal));
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public @ResponseBody ApiResponse<String> getUser(Authentication authentication) {
+        return ApiResponseGenerator.success(testService.getUser(authentication));
 
     }
 
-    // to-be
-    @GetMapping("/sqs-test")
-    public  @ResponseBody ApiResponse<String> getSqsTest(Principal principal) {
-        return ApiResponseGenerator.success(testService.getUser(principal));
-    }
 }

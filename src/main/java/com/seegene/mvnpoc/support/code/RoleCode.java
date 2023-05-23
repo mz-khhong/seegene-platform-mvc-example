@@ -6,9 +6,9 @@ import lombok.ToString;
 @Getter
 @ToString
 public enum RoleCode {
-    ROLE_USER("ROLE_USER"),
-    ROLE_MANAGER("ROLE_MANAGER"),
-    ROLE_ADMIN("ROLE_ADMIN");
+    USER("USER"),
+    MANAGER("MANAGER"),
+    ADMIN("ADMIN");
 
     private final String roleName;
 
@@ -22,13 +22,13 @@ public enum RoleCode {
 
     public static String getRoleCode(RoleCode roleCode) {
         switch (roleCode){
-            case ROLE_USER:
-                return ROLE_USER.roleName;
-            case ROLE_MANAGER:
-                return ROLE_MANAGER.roleName;
-            case ROLE_ADMIN:
-                return ROLE_ADMIN.roleName;
+            case USER:
+                return USER.roleName;
+            case MANAGER:
+                return MANAGER.roleName;
+            case ADMIN:
+                return ADMIN.roleName;
         }
-        return ROLE_USER.roleName;
+        return USER.roleName;
     }
 }

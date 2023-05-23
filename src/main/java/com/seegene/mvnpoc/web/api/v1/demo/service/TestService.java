@@ -1,6 +1,8 @@
 package com.seegene.mvnpoc.web.api.v1.demo.service;
 
 import com.nimbusds.jose.shaded.gson.internal.LinkedTreeMap;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
  * 1                 최초작성
  * </PRE>
  */
+@Slf4j
 @Service
 public class TestService {
 
@@ -28,22 +31,18 @@ public class TestService {
     }
 
     public String getAdminUser(Principal principal) {
-        JwtAuthenticationToken token = (JwtAuthenticationToken) principal;
-        String userName = (String) token.getTokenAttributes().get("name");
-        String userEmail = (String) token.getTokenAttributes().get("email");
-        String role = (String) token.getTokenAttributes().get("roles");
-        return String.format("[Seegene-platform-mvc-example]\n Hello Admin \nUser Name : %s\nUser Email : %s,\n Role:%s",userName, userEmail, role);
+//        JwtAuthenticationToken token = (JwtAuthenticationToken) principal;
+//        String userName = (String) token.getTokenAttributes().get("name");
+//        String userEmail = (String) token.getTokenAttributes().get("email");
+//        String role = (String) token.getTokenAttributes().get("roles");
+//        return String.format("[Seegene-platform-mvc-example]\n Hello Admin \nUser Name : %s\nUser Email : %s,\n Role:%s",userName, userEmail, role);
+        return String.format("[Seegene-platform-mvc-example] Hello Admin ");
     }
 
-    public String getUser(Principal principal) {
-        JwtAuthenticationToken token = (JwtAuthenticationToken) principal;
-        String tokenValue = token.getToken().getTokenValue();
-        String userName = (String) token.getTokenAttributes().get("name");
-        String userEmail = (String) token.getTokenAttributes().get("email");
-        LinkedTreeMap realm_access = (LinkedTreeMap) token.getTokenAttributes().get("realm_access");
-        ArrayList roles = (ArrayList) realm_access.get("roles");
-        Object collect = roles.stream().collect(Collectors.toList());
-
-        return String.format("[Seegene-platform-mvc-example]\n Hello User \nUser Name : %s\nUser Email : %s, roles:%s",userName, userEmail, collect);
+    public String getUser(Authentication authentication) {
+        log.info(String.format("[getUser] user: %s, role:%s, ", authentication.getName(), authentication.getAuthorities().toString()));
+        String role = authentication.getAuthorities().toString();
+        String name = authentication.getName();
+        return String.format("[Seegene-platform-mvc-example]\n Hello User ");
     }
 }

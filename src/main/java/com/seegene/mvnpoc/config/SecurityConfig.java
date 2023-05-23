@@ -1,40 +1,56 @@
 package com.seegene.mvnpoc.config;
 
-import com.seegene.mvnpoc.security.JwtAuthConverter;
+import com.seegene.mvnpoc.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 
 @Configuration
-@EnableWebSecurity
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig  {
 
-    @Value("${access.info.admin}")
-    public String ADMIN;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final AuthenticationProvider authenticationProvider;
 
-    @Value("${access.info.user}")
-    public String USER;
-    private final JwtAuthConverter jwtAuthConverter;
+    private static final String[] whiteList = new String[] {
+            "/test/**",
+            "/auth/**"
+    };
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET, "/test/anonymous", "/test/anonymous/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/test/admin", "/test/admin/**").authenticated()
-                .requestMatchers(HttpMethod.GET, "/test/user").authenticated()
-                .anyRequest().authenticated();
-        http.oauth2ResourceServer()
-                .jwt()
-                .jwtAuthenticationConverter(jwtAuthConverter);
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        return http.build();
+    GrantedAuthorityDefaults grantedAuthorityDefaults() {
+        return new GrantedAuthorityDefaults(""); // Remove the ROLE_ prefix
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+            .headers().frameOptions().disable().and()
+            .authorizeHttpRequests()
+            .requestMatchers(whiteList).permitAll()
+//            .requestMatchers("/api/test/**").permitAll()
+            .anyRequest()
+                .authenticated()
+            .and()
+            .authenticationProvider(authenticationProvider)
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+            .logout()
+            .logoutUrl("/api/auth/logout")
+//            .addLogoutHandler(logoutHandlerService)
+            .logoutSuccessHandler(((request, response, authentication) -> SecurityContextHolder.clearContext()));
+
+        return httpSecurity.build();
     }
 
 }
