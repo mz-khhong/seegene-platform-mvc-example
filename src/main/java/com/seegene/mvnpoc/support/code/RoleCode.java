@@ -8,8 +8,8 @@ import lombok.ToString;
 public enum RoleCode {
     USER("USER"),
     MANAGER("MANAGER"),
-    ADMIN("ADMIN");
-
+    ADMIN("ADMIN"),
+    ETC("ETC");
     private final String roleName;
 
     RoleCode(String roleName) {
@@ -28,6 +28,8 @@ public enum RoleCode {
                 return MANAGER.roleName;
             case ADMIN:
                 return ADMIN.roleName;
+            case ETC:
+                return ETC.roleName;
         }
         return USER.roleName;
     }

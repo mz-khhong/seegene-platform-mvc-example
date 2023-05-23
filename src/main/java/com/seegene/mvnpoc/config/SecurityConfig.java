@@ -39,7 +39,6 @@ public class SecurityConfig  {
             .headers().frameOptions().disable().and()
             .authorizeHttpRequests()
             .requestMatchers(whiteList).permitAll()
-//            .requestMatchers("/api/test/**").permitAll()
             .anyRequest()
                 .authenticated()
             .and()

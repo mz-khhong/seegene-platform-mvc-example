@@ -30,19 +30,17 @@ public class TestService {
         return String.format("[Seegene-platform-mvc-example]\n Hello Anonymous");
     }
 
-    public String getAdminUser(Principal principal) {
-//        JwtAuthenticationToken token = (JwtAuthenticationToken) principal;
-//        String userName = (String) token.getTokenAttributes().get("name");
-//        String userEmail = (String) token.getTokenAttributes().get("email");
-//        String role = (String) token.getTokenAttributes().get("roles");
-//        return String.format("[Seegene-platform-mvc-example]\n Hello Admin \nUser Name : %s\nUser Email : %s,\n Role:%s",userName, userEmail, role);
-        return String.format("[Seegene-platform-mvc-example] Hello Admin ");
+    public String getAdminUser(Authentication authentication) {
+        log.info(String.format("[getUser] user: %s, role:%s, ", authentication.getName(), authentication.getAuthorities().toString()));
+        String name = authentication.getName();
+        String role = authentication.getAuthorities().toString();
+        return String.format("[Seegene-platform-mvc-example] Hello Admin: %s, Role: %s", name, role);
     }
 
     public String getUser(Authentication authentication) {
         log.info(String.format("[getUser] user: %s, role:%s, ", authentication.getName(), authentication.getAuthorities().toString()));
-        String role = authentication.getAuthorities().toString();
         String name = authentication.getName();
-        return String.format("[Seegene-platform-mvc-example]\n Hello User ");
+        String role = authentication.getAuthorities().toString();
+        return String.format("[Seegene-platform-mvc-example] Hello User: %s, Role: %s", name, role);
     }
 }
