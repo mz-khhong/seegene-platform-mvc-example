@@ -40,15 +40,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             String authHeader = request.getHeader(AUTHORIZATION);
-            if(StringUtils.isEmpty(authHeader)){
+            if(!StringUtils.isEmpty(authHeader)){
+                String usernameFromToken = jwtProvider.getUsernameFromToken(authHeader);
+                Authentication authenticate = jwtProvider.authenticate(new UsernamePasswordAuthenticationToken(usernameFromToken, ""));
+        //        ToKenResponseRecord toKenResponseRecord = jwtProvider.changeToken(authHeader);
+        //        Authentication authentication = jwtProvider.getAuthentication(toKenResponseRecord.accessToken());
+                SecurityContextHolder.getContext().setAuthentication(authenticate);
                 log.info("authorization is Empty");
             }
-
-            String usernameFromToken = jwtProvider.getUsernameFromToken(authHeader);
-            Authentication authenticate = jwtProvider.authenticate(new UsernamePasswordAuthenticationToken(usernameFromToken, ""));
-    //        ToKenResponseRecord toKenResponseRecord = jwtProvider.changeToken(authHeader);
-    //        Authentication authentication = jwtProvider.getAuthentication(toKenResponseRecord.accessToken());
-            SecurityContextHolder.getContext().setAuthentication(authenticate);
 
             filterChain.doFilter(request, response);
         } catch (Exception e) {

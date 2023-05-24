@@ -2,14 +2,21 @@
 
 # KeyCloak Info  
 - `Version : 20.0.5`
-- `Realm : seegene-platform`
-- `Client : platform-client, develop-user`
+- `Realm : xxxxxx`
+- `Client : platform-client`
 - `ClientSecret : xxxxxxxxx`
-- `Roles info : admin-> admin, user -> develop-user `
-- Configuration > {http://localhost:9080}/realms/seegene-platform/.well-known/openid-configuration
+- `Roles info : from db table `
 - Token 발급 > {http://localhost:9080}/realms/seegene-platform/protocol/openid-connect/token
+- Configuration > {http://localhost:9080}/realms/seegene-platform/.well-known/openid-configuration
+
+> Sample API LIST 
+> - `/api/test/admin` - for Role ADMIN 
+> - `/api/test/user`  - for Role ADMIN, USER
+> - `/api/test/anonymous` - for all
+> - `/api/test/signup` - for all
+
 > [Command] \
->  curl -X POST "http://localhost:18080/auth/realms/my_realm/protocol/openid-connect/token" \
+>  curl -X POST "http://localhost:9080/auth/realms/my_realm/protocol/openid-connect/token" \
 --header "Content-Type: application/x-www-form-urlencoded" \
 --data-urlencode "grant_type=password" \
 --data-urlencode "client_id={my_client}" \

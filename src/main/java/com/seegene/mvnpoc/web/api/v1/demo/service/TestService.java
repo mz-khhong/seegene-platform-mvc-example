@@ -1,14 +1,9 @@
 package com.seegene.mvnpoc.web.api.v1.demo.service;
 
-import com.nimbusds.jose.shaded.gson.internal.LinkedTreeMap;
+import com.seegene.mvnpoc.web.api.v1.demo.domain.dto.UserInfoRecord;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
-
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 /**
  * class 한글 설명
@@ -42,5 +37,9 @@ public class TestService {
         String name = authentication.getName();
         String role = authentication.getAuthorities().toString();
         return String.format("[Seegene-platform-mvc-example] Hello User: %s, Role: %s", name, role);
+    }
+
+    public UserInfoRecord createUser(UserInfoRecord userInfoRecord) {
+        return userInfoRecord;
     }
 }
