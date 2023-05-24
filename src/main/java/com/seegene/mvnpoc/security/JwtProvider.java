@@ -86,7 +86,7 @@ public class JwtProvider implements AuthenticationProvider {
                     .setSubject(userInfoRecord.userName())
                     .setIssuedAt(new Date(now))
                     .setExpiration(access_token_validity)
-                    .claim(ROLES, userInfoRecord.userRole().getRoleName())
+                    .claim(ROLES, userInfoRecord.userRole())
                     .signWith(secretKey, SignatureAlgorithm.HS256)
                     .compact();
             log.info(String.format("[createAccessToken] %s", access_token));
@@ -94,7 +94,7 @@ public class JwtProvider implements AuthenticationProvider {
             refresh_token = Jwts.builder()
                     .setSubject(userInfoRecord.userName())
                     .setIssuedAt(new Date(now))
-                    .claim(ROLES, userInfoRecord.userRole().getRoleName())
+                    .claim(ROLES, userInfoRecord.userRole())
                     .setExpiration(refresh_token_validity)
                     .signWith(secretKey, SignatureAlgorithm.HS256)
                     .compact();

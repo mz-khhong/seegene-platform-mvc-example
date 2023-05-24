@@ -25,13 +25,13 @@ import org.springframework.validation.annotation.Validated;
 public record UserInfoRecord(@JsonInclude String id, @JsonProperty("userId") String userId, @JsonProperty("userName") String userName,
                              @JsonProperty("userPassword") String userPassword, String userEmail, String userBirthDay,
                              String userEnterDay, String userResignationDay, @JsonProperty("userOrganizationName") String userOrganizationName,
-                             String userMobileNumber, @JsonProperty("userWorkStatus") WorkCode userWorkStatus, @JsonProperty("userRole") RoleCode userRole) {
+                             String userMobileNumber, @JsonProperty("userWorkStatus") WorkCode userWorkStatus, @JsonProperty("userRole") String userRole) {
 
 //    public UserInfoRecord(Long userSeq, String userId, String userName, LocalDate userBirthDay, LocalDate userEnterDay, LocalDate userResignationDay, String userOrganizationName, String userMobileNumber, WorkCode userWorkStatus, RoleCode userRole) {
 //        this(userSeq, userId, userName, "","", DefaultDateTimeConverter.convertDate(userBirthDay), DefaultDateTimeConverter.convertDate(userEnterDay), DefaultDateTimeConverter.convertDate(userResignationDay), userOrganizationName, userMobileNumber, userWorkStatus, userRole);
 //    }
 //
-    public UserInfoRecord(String id, String userId, String userName, String userEmail, WorkCode workCode, RoleCode userRole) {
+    public UserInfoRecord(String id, String userId, String userName, String userEmail, WorkCode workCode, String userRole) {
         this(id, userId, userName, "", userEmail, "","",  "", "", "", workCode, userRole);
     }
 

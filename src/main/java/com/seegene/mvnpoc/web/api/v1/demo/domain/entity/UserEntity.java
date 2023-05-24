@@ -79,12 +79,18 @@ public class UserEntity implements Serializable, UserDetails {
 
     /** 권한 */
     @Column(name = "user_role")
-    @Enumerated(EnumType.STRING)
-    private RoleCode userRole;
+//    @Enumerated(EnumType.STRING)
+    private String userRole;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(userRole.getRoleName()));
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+
+        for(String role : userRole.split(",")){
+            authorities.add(new SimpleGrantedAuthority(role));
+        }
+        return authorities;
+//        return List.of(new SimpleGrantedAuthority(userRole.getRoleName()));
     }
 
     @Override
