@@ -1,11 +1,8 @@
 package com.seegene.mvnpoc.security;
-import com.google.gson.Gson;
-import com.seegene.mvnpoc.support.code.ErrorCode;
+
 import com.seegene.mvnpoc.support.convert.DefaultDateTimeConverter;
 import com.seegene.mvnpoc.support.convert.DefaultDateTimeFormat;
-import com.seegene.mvnpoc.support.exception.EntityExistsException;
 import com.seegene.mvnpoc.support.exception.EntityNotFoundException;
-import com.seegene.mvnpoc.support.exception.UnAuthorizedException;
 import com.seegene.mvnpoc.web.api.v1.demo.domain.dto.DecodeJwt;
 import com.seegene.mvnpoc.web.api.v1.demo.domain.dto.ToKenResponseRecord;
 import com.seegene.mvnpoc.web.api.v1.demo.domain.dto.UserInfoRecord;
@@ -23,19 +20,15 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import javax.lang.model.UnknownEntityException;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.time.ZoneId;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Optional;
-import java.util.function.Function;
 
 /**
  * class 한글 설명

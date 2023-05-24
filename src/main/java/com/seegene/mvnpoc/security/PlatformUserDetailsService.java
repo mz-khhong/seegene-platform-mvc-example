@@ -1,7 +1,6 @@
 package com.seegene.mvnpoc.security;
 
 import com.seegene.mvnpoc.support.exception.EntityNotFoundException;
-import com.seegene.mvnpoc.web.api.v1.demo.domain.entity.UserEntity;
 import com.seegene.mvnpoc.web.api.v1.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

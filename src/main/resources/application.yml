@@ -29,12 +29,6 @@ spring:
           batch_size: 500
           fetch_size: 500
           batch_versioned_data: true
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://localhost:9080/realms/seegene-platform
-          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
 
 jwt:
   token-validity-in-seconds: 1800 # * 1000 = 30분
@@ -42,14 +36,6 @@ jwt:
   server:
     api-auth-key: "localseegeneapiauthkeyinsilicoaaaaaaaa"
 
-  auth:
-    converter:
-      resource-id: platform-client
-      principal-attribute: preferred_username
-access:
-  info:
-    admin: admin
-    user: develop-user
 
 app:
   cors:
