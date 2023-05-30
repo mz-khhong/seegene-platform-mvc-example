@@ -46,7 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         //        ToKenResponseRecord toKenResponseRecord = jwtProvider.changeToken(authHeader);
         //        Authentication authentication = jwtProvider.getAuthentication(toKenResponseRecord.accessToken());
                 SecurityContextHolder.getContext().setAuthentication(authenticate);
-                log.info("authorization is Empty");
+                // log.info("authorization is Empty");
             }
 
             filterChain.doFilter(request, response);
